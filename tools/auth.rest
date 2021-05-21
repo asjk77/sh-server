@@ -1,0 +1,27 @@
+@ENDPOINT = http://localhost:4000
+
+### login
+POST {{ENDPOINT}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "tksgh1000@naver.com",
+    "passwd": "passwd"
+}
+
+
+### logout
+GET {{ENDPOINT}}/auth/logout
+
+
+### register POST
+POST {{ENDPOINT}}/auth/register
+Content-Type: application/json
+
+{
+    "email": "tksgh1000@naver.com",
+    "passwd": "passwd",
+    "firstname": "Hwang",
+    "lastname": "Sanho",
+    "address": "서울특별시 관악구 남부순환로 152가길 26 가동 2층 8호 "
+}
