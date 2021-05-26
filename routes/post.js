@@ -14,6 +14,6 @@ const asyncHandler = require('express-async-handler');
 var router = express.Router();
 
 router.post('/new', asyncHandler( controller.newPost ));
-router.get('/show/', asyncHandler(controller.showPostsGet) );
+router.get('/show', asyncHandler(controller.showPostsGet) );
 
 module.exports = router;

@@ -46,7 +46,7 @@ PostSchema.statics.createPost = function (
             writer,
             title,
         },
-        content,
+        contents : content,
     });
 
     return newPost.save();

@@ -9,7 +9,7 @@
 // Description : post controller 입니다.
 
 const PostModel = require('../models/post');
-const Validator= require("fastest-validator");
+const Validator  = require("fastest-validator");
 const { isLogined, getLoginData, isNotLogined } = require('../utils/sessions');
 const { makeMessage, makeErrors } = require('../utils/makeError');
 const { json } = require('body-parser');
@@ -18,24 +18,22 @@ const { json } = require('body-parser');
  * 새로운 글을 작성합니다. 
  */
 exports.newPost = async ( req, res ) => {
-
+    console.log( req.body );
     if ( isNotLogined( req.session ) )
-        return res.state(400).json(makeMessage('로그인 해주세요!'));
-    
+        return res.status(400).json(makeMessage('로그인 해주세요!'));
     const schema = {
         title: { type: "string" },
-        content: { type: "string", min:1, max: 1000 }
-    }
-
-    const v = Validator();
-    const error = v.validate( req.body );
+        content: { type: "string" }
+    };
+    const v = new Validator();
+    const error = v.validate( req.body, schema );
     if ( error !== true )
-        return res.json( makeErrors(' API Error', error ) );
+        return res.status(400).json( makeErrors(' API Error', error ) );
 
-    const login_info = getLoginData( session );
-    await PostModel.createPost( login_info._id, body.title, content );
+    const login_info = getLoginData( req.session );
+    const newPost = await PostModel.createPost( login_info._id, req.body.title, req.body.content);
 
-    return res.state(200);
+    return res.status(200).json();
 }
 
 /**

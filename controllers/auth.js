@@ -25,7 +25,7 @@ exports.registerPost = async ( req, res ) => {
     const v = new Validator();
     const error = v.validate( req.body, schema );
     if ( error !== true )
-        return res.json(makeErrors( 'API Error', error ));
+        return res.status(400).json(makeErrors( 'API Error', error ));
     
     // 유효한 email 인지 확인합니다.
     const post = req.body;
@@ -57,12 +57,12 @@ exports.loginPost = async ( req, res ) => {
     const error = v.validate( req.body, schema ); 
 
     if( error !== true ) 
-        return res.json( makeErrors('API Error', error ));
+        return res.status(400).json( makeErrors('API Error', error ));
 
     const account = await accountModel.findByEmail( req.body.email );
 
     if ( account === null )
-        return res.json( makeErrors('Validation Error', '아이디를 찾을 수 없읍니다.') );
+        return res.status(400).json( makeErrors('Validation Error', '아이디를 찾을 수 없읍니다.') );
 
     const result = account.validatePasswd( req.body.passwd );
     
